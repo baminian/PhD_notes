@@ -5,3 +5,5 @@
 *.toc
 *.log
 *.gz
+*.bbl
+*.blg
