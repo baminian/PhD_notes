@@ -36,33 +36,72 @@
 
 \begin{document}
 \section{Introduction}
-There are numerous gaze trackers. There are head mounted gaze trackers, infrared camera (Tobii). 
+While many algorithm for learning from demonstration are based on training data, we propose to leverage the interaction between the teacher and learner. We believe that learning from demonstration with natural interaction has many advantages. It allows easy reprogramming of the robot since data acquisition in laboratory framework is not necessary. Moreover, the robot can interrupt the demonstration and engage in an interaction with the teacher in order to disambiguate its understanding, reducing the amount of data needed for learning.
 \newline
-In our study, we will rely on our gaze/head tracker [ref...] using a kinect v2. 
+In order to allow natural interaction, we rely on non-intrusive recording systems. Teaching from demonstration involves many communication cues. The language informed about the objects and the task to perform nevertheless other non-verbal communication cues carry those informations too. In particular, the gaze is an important one. 
+\newline
+The gaze informs about attention and intention. Therefore, it can be used as a prior for task segmentation and recognition. The estimation of the gaze relies on the algorithm presented in \cite{Funes2016} where the gaze is infrared from RGB and Depth video steams obtained from a Microsoft Kinect.
 
 \section{Motivation}
-The present dataset would be used for evaluated our gaze tracker. In particular:
+The present dataset would be used to evaluate the gaze estimation algorithm. As a first step, we aim to evaluate the accuracy of the gaze estimation algorithm using a controlled (supervised) calibration procedure. In a second step, we use human-robot interaction to infer unsupervised calibration method. In particular, we are interested in calibration methods using interaction cues to infer the calibration targets. Moreover, we are interesting in the inference of calibration target based on object geometry. Finally, we aim to leverage gaze behavior during demonstration. In particular, the segmentation and recognition of the demonstration. For more details on the proposed benchmarks refer to section \ref{Benchmarks}.
+\subsection{Gaze calibration}
+The gaze calibration procedure relies on the inference of a target for calibration. In the case of point (marker) targets, the target is trivially defined. The present data set aim to provide enough calibration points to evaluate the gaze estimation algorithm with calibration. Nevertheless, the inference of the gaze target is less trivial when the object of attention is big with respect to some dimensions. We will be interesting to evaluate the effect of the gaze calibration procedure while the target is an object (of various size and shape).
+\subsection{Gaze behavior}
+Based on the accuracy of the gaze estimation algorithm, we would like to leverage some gaze behaviors. In particular, we evaluate how well the gaze estimation algorithm can inferred the Visual Focus Of Attention (VFOA). Further, we would like to incorporate the VFOA model in a multi-modal task segmentation and recognition methods. In particular, we are interesting in the timing of the VFOA to infer demonstration segmentation and recognition.
+
+\section{Data collection}
+\label{Data_Collection}
+In this section we first describe our recording methotology and then describe the different recording sessions constituting the dataset.
+\subsection{Overview}
+\label{Overview}
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.05, angle=-90]{Pictures/Baxter_Setup.jpg}
+\end{center}
+\caption{Experimental setup. \label{Experimental_Setup}}
+\end{figure}
+The recording setup is as shown in figure \ref{Experimental_Setup}. It comprises and RGB-D camera (a Microsoft Kinect v2), a robot (a Baxter from Rethink Robotics), a table with marker, a cup, a saucer,.... The characteristics and purpose or function of each element are described as follows:
 \begin{itemize}
-\item Evaluate the tracker calibration in a controll setup.
-\item Can we extract gaze behaviors with our tracker?
-\item If yes, which ones? (and usefulness)
+\item Microsoft Kinect v2: this consumer device provides standard video (RGB) and Depth video steams. The RGB camera has an HD resolution ($1920 \times 1080$) while the Depth camera has a resolution of $512 \times 424$. The acquisition rate is 30 frame-per-second.
+\item Baxter robot: this is a human like robot from Rethink Robotics. We will use the robot's ego-motion to infer gaze target. In particular, the position of the head of the robot (screen) and its end-effectors are recored.
+\item Table with markers: those markers are used as calibration targets for the gaze. Moreover, the object are placed on those markers in order to infer there position without the need of an object detection algorithm.
+\item Cup and Saucer: those object are involved in the demonstration task. We provide a 3D mesh of this objects.
+\item Other Objects: those objects are used as gaze target for calibration. We provide a 3D mesh for each objects.
 \end{itemize}
 
-\section{Hypothesis}
-The gaze is an important non-verbal communication cue. In particular, it is a good prior for attention modelling (nevertheless our attention may be oriented to a sound source we do not look at). We are interesting in knowing if we can know if someone is looking at an object and a space location. We are also intersting in the timing of the gaze. In particular, reactive and proactive gaze duration.
-
-\section{Materials}
-We want to observe how well we can catch the intention of a teacher (relevant aspect of the task) in various task with various objects. The baseline of the experiment will consist of a table with different object on it and with the robot on one side and the human teacher on the other side. The distance between them will correspond roughly to 1.0-1.5 meter. We list object of interest below. We suppose to have at least two object of each kind (small and big). The different objects that may be relevant to manipulate are
+\section{Recording sessions}
+In order to evaluate the gaze estimation algorithm and calibration, we designed a set of three recording sessions using respectively the end-effector of the robot, the markers on the table and the objects on the table as calibration points. In order to evaluate the gaze estimation algorithm to infer gaze behavior, we designed a set of three recording sessions. In the present section we describe the six recording session.
+\subsection{Gaze calibration}
+In the present section are described the recording session for the supervised gaze calibration method. It involves three different type target (end-effectors, markers, objects) and two kind of head pose activity (static, natural).
+\subsubsection{Targets}
 \begin{itemize}
-\item Cube: The cube is symmetric object, its orientation does not matter. Nevertheless, placing the small cube on the big one is easier that the opposite where we have to care about equilibrium.
-\item Parallelepiped: We could use parallelepiped with a big difference between width and height ($h>>w$). In that case, the orientation of the object is relevant (vertical vs horizontal).
-\item Ball: The ball is symmetric as the cube. Nevertheless, it does not have any orientation (the cube as to be on one of its face, the ball does not have). Moreover, the ball is a more dynamic object, it may move after placing it.
-\item LEGO: Using LEGO may be interesting for the design of a task with many sub-task (construction). Moreover, the experience may be reproduce easier.
-\item Mug and kettle: This is are daily objects. They can both contain a liquid where we expect the robot to act differently.
-\item Any objects of common life: We expect the robot to be able to use daily objects. We will need to test our method on a more realistic case.
+\item \textit{End-Effector (ET)}: the end-effector of the robot is used as a target for calibration. The exact point at which the participants have to look is leverage by a white rubber band on the gripper. For each robot's limbs, the calibration points are contains in a parallelepiped of width and height of 1 meter and depth of 30 centimeters at the left and right of the robot. There are 12 points for both sides of the robot distributed as a grid ($2 \times 3 \times 3$).
+\item \textit{Markers Target (MT)}: (need some measurement and camera orientation.) the table is marked with 15 markers distributed as a grid ($3 \times 5$).
+\item \textit{Object Target (OT)}: the objects are placed on the table (on the markers). The participant start by looking at the robot who asked to the participant to look at on of the object on the table until it asked to stopped and look back to the robot. The robot ask to look at an other object and so on. For this experiment, we consider only the natural head pose activity framework.
+\end{itemize}
+\subsubsection{Head pose activity}
+\begin{itemize}
+\item \textit{Static Pose (SP)}: the participant start by looking at the middle of the robot's screen in order to guarantee frontal view of the face. Then, the participant is asked to keep his head pose fixed.
+\item \textit{Natural Pose (NP)}: The participant can freely move its head toward the target.
+\end{itemize}
+\subsection{Gaze behavior}
+\begin{itemize}
+\item \textit{Robot Interaction (RI)}: Baxter says "Hi." and stretches its hand for a shake and says "How are you?". He waits for the shake and brings its hands back.
+\item \textit{Cup and saucer Interaction (CI)}: the cup and the saucer are placed on two table markers. The participant has to take the cup and place it on the saucer. Then, s/he takes the saucer (with the cup on) and place on a the defined marker. Each participants proceed to 3 different setup.
+\item \textit{Table Interaction (TI)}: Put the table (dishes, fork, knife, glass).
 \end{itemize}
 
-\section{Experiments}
+\section{Data processing}
+Besides the raw data describe in section \ref{Overview}, we also provide additional information that is essential for deriving ground truth measures for evaluation or simply useful to exploit the dataset and run the experiments. It compromises the camera calibration, the synchronization, the head pose, the manual annotations, the target position, and 3D object meshes.
+
+\subsection{World coordinate system definition}
+To standardize the definition all 3D variable in the data, we have defined a common world coordinate system (WCS), in which the variable refers to \textit{meters}. It has been define as the robot frame being at the base of the robot.
+
+\section{Benchmarks}
+\label{Benchmarks}
+
+\clearpage
+
 \subsection{Baxter Gaze Calibration}
 Fix end-effector.
 \subsection{Table Points Calibration}
@@ -71,5 +110,10 @@ Fix points on the table.
 Baxter says hello with rising the hand (change between left and right). Then he says: please look at the <object>. Now look at me.
 \subsection{Object Moving Calibration}
 Move an object to an other location. Different kind of object. Equilibrium, affordance.
+
+
+\clearpage
+\bibliographystyle{ieeetr}
+\bibliography{Notes}
 
 \end{document}
