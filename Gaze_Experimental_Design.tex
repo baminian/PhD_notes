@@ -43,7 +43,7 @@ In order to allow natural interaction, we rely on non-intrusive recording system
 The gaze informs about attention and intention. Therefore, it can be used as a prior for task segmentation and recognition. The estimation of the gaze relies on the algorithm presented in \cite{Funes2016} where the gaze is infrared from RGB and Depth video steams obtained from a Microsoft Kinect.
 
 \section{Motivation}
-The present dataset would be used to evaluate the gaze estimation algorithm. As a first step, we aim to evaluate the accuracy of the gaze estimation algorithm using a controlled (supervised) calibration procedure. In a second step, we use human-robot interaction to infer unsupervised calibration method. In particular, we are interested in calibration methods using interaction cues to infer the calibration targets. Moreover, we are interesting in the inference of calibration target based on object geometry. Finally, we aim to leverage gaze behavior during demonstration. In particular, the segmentation and recognition of the demonstration. For more details on the proposed benchmarks refer to section \ref{Benchmarks}.
+The present dataset would be used to evaluate the gaze estimation algorithm. As a first step, we aim to evaluate the accuracy of the gaze estimation algorithm using a controlled (supervised) calibration procedure. In a second step, we use the human-robot interactions to infer unsupervised calibration method. In particular, we are interested in calibration methods using interaction cues to infer the calibration targets. Moreover, we are interesting in the inference of calibration target based on object geometry. Finally, we aim to leverage gaze behavior during demonstration. In particular, the segmentation and recognition of the demonstration. For more details on the proposed benchmarks refer to section~\ref{Benchmarks}.
 \subsection{Gaze calibration}
 The gaze calibration procedure relies on the inference of a target for calibration. In the case of point (marker) targets, the target is trivially defined. The present data set aim to provide enough calibration points to evaluate the gaze estimation algorithm with calibration. Nevertheless, the inference of the gaze target is less trivial when the object of attention is big with respect to some dimensions. We will be interesting to evaluate the effect of the gaze calibration procedure while the target is an object (of various size and shape).
 \subsection{Gaze behavior}
@@ -64,7 +64,7 @@ The recording setup is as shown in figure \ref{Experimental_Setup}. It comprises
 \begin{itemize}
 \item Microsoft Kinect v2: this consumer device provides standard video (RGB) and Depth video steams. The RGB camera has an HD resolution ($1920 \times 1080$) while the Depth camera has a resolution of $512 \times 424$. The acquisition rate is 30 frame-per-second.
 \item Baxter robot: this is a human like robot from Rethink Robotics. We will use the robot's ego-motion to infer gaze target. In particular, the position of the head of the robot (screen) and its end-effectors are recored.
-\item Table with markers: those markers are used as calibration targets for the gaze. Moreover, the object are placed on those markers in order to infer there position without the need of an object detection algorithm.
+\item Table with markers: those markers are used as calibration targets for the gaze. Moreover, the object are placed on those markers in order to infer there position without the need of an object detection algorithm. The markers are numbered in order to differentiate them.
 \item Cup and Saucer: those object are involved in the demonstration task. We provide a 3D mesh of this objects.
 \item Other Objects: those objects are used as gaze target for calibration. We provide a 3D mesh for each objects.
 \end{itemize}
@@ -76,7 +76,7 @@ In the present section are described the recording session for the supervised ga
 \subsubsection{Targets}
 \begin{itemize}
 \item \textit{End-Effector (ET)}: the end-effector of the robot is used as a target for calibration. The exact point at which the participants have to look is leverage by a white rubber band on the gripper. For each robot's limbs, the calibration points are contains in a parallelepiped of width and height of 1 meter and depth of 30 centimeters at the left and right of the robot. There are 12 points for both sides of the robot distributed as a grid ($2 \times 3 \times 3$).
-\item \textit{Markers Target (MT)}: (need some measurement and camera orientation.) the table is marked with 15 markers distributed as a grid ($3 \times 5$).
+\item \textit{Markers Target (MT)}: (need some measurement and camera orientation.) the table is marked with 15 markers distributed as a grid ($3 \times 5$). Each markers is numbered. The experimental supervisor will ask to the participant to look at a marker number until s/he ask her/him to look at the next target.
 \item \textit{Object Target (OT)}: the objects are placed on the table (on the markers). The participant start by looking at the robot who asked to the participant to look at on of the object on the table until it asked to stopped and look back to the robot. The robot ask to look at an other object and so on. For this experiment, we consider only the natural head pose activity framework.
 \end{itemize}
 \subsubsection{Head pose activity}
@@ -86,31 +86,46 @@ In the present section are described the recording session for the supervised ga
 \end{itemize}
 \subsection{Gaze behavior}
 \begin{itemize}
-\item \textit{Robot Interaction (RI)}: Baxter says "Hi." and stretches its hand for a shake and says "How are you?". He waits for the shake and brings its hands back.
+\item \textit{Robot Interaction (RI)}: Baxter says "Hi." and stretches its hand for a shake and says "How are you?". It waits for the shake and brings its hands back.
 \item \textit{Cup and saucer Interaction (CI)}: the cup and the saucer are placed on two table markers. The participant has to take the cup and place it on the saucer. Then, s/he takes the saucer (with the cup on) and place on a the defined marker. Each participants proceed to 3 different setup.
 \item \textit{Table Interaction (TI)}: Put the table (dishes, fork, knife, glass).
 \end{itemize}
 
+\subsection{Remarks}
+In order to not bias the natural gaze behavior of the participants, we proceed first with the gaze behavior experiment and, then, with the gaze calibration.
+
 \section{Data processing}
-Besides the raw data describe in section \ref{Overview}, we also provide additional information that is essential for deriving ground truth measures for evaluation or simply useful to exploit the dataset and run the experiments. It compromises the camera calibration, the synchronization, the head pose, the manual annotations, the target position, and 3D object meshes.
+Besides the raw data describe in section \ref{Overview}, we also provide additional information that is essential for deriving ground truth measures for evaluation or simply useful to exploit the dataset and run the experiments. It compromises the camera calibration, the synchronization, the head pose, the manual annotations, the target position, and 3D object meshes. Below, we present the procedure to estimate those parameters
 
 \subsection{World coordinate system definition}
 To standardize the definition all 3D variable in the data, we have defined a common world coordinate system (WCS), in which the variable refers to \textit{meters}. It has been define as the robot frame being at the base of the robot.
 
+\subsection{RGB-D sensors intrinsic calibration}
+For the calibration of the Microsoft Kinect v2, we rely on the \texttt{iai\_kinect} softwares. It computes the intrinsic of the RGB and Depth camera, as well as the extrinsic parameters between both cameras.
+
+\subsection{RGB-D sensors extrinsic calibration and synchrony}
+The rigid transform from the robot to the camera frame can be evaluated using the position of the end-effector in the RGB-D camera. The synchronization of the robot and camera use done by time-stamping the robot time with the computer and using the \texttt{MessageFilter} ROS package.
+
+\subsection{Target position}
+By placing the object on the markers of the table, one can evaluate there position when there are on the table. In the future, we will provide object position using our 3D meshes of the object or an other methods based on object detection. The position of the target is given for each frame. Each object has its own ID which is given in the data set. Moreover, an additional variable is set to "left", "right" or "NA" if the object is manipulated, respectively, by the left, the right hand or is not manipulated.
+
+\subsection{Body landmark}
+We will report body landmark position as hands, shoulders and head pose using our tracker (REFERENCE).
+
+\subsection{Gaze behavior label}
+Each frame is labeled with a "b" when the participant is blinking. The frame is labeled by the object ID when the participant is looking at the object. In the case of saccade or undefined VFOA (gaze search), the frame is labeled with "NA". This labeling is done manually.
+
 \section{Benchmarks}
 \label{Benchmarks}
-
-\clearpage
-
-\subsection{Baxter Gaze Calibration}
-Fix end-effector.
-\subsection{Table Points Calibration}
-Fix points on the table.
-\subsection{Table Objects Calibration}
-Baxter says hello with rising the hand (change between left and right). Then he says: please look at the <object>. Now look at me.
-\subsection{Object Moving Calibration}
-Move an object to an other location. Different kind of object. Equilibrium, affordance.
-
+In present section, we describe different evaluation benchmarks for gaze calibration, as well as for gaze behavior and task segmentation and recognition.
+\subsection{Benchmark 1: Natural versus Static head pose activity}
+\subsection{Benchmark 2: RT versus MT} 
+\subsection{Benchmark 3: MT versus OT}
+\subsection{Benchmark 4: RT versus OT}
+\subsection{Benchmark 5: RI versus RT, MT and OT}
+\subsection{Benchmark 6: Task segmentation and recognition (CI, TI)}
+In our experiments, the tasks consist of pick and place actions. We will characterize a pick and place action by: the object ID, the final position (Gaussian) of the object and a boolean that state if the orientation of the object matters when carrying it.
+\paragraph{Remark} The object position while manipulated is given by the hand position.
 
 \clearpage
 \bibliographystyle{ieeetr}
