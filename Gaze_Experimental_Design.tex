@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\med}{med}
+
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{empheq}
+\usepackage{epsfig}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{fancyvrb}
+\usepackage{moreverb}
+\usepackage{listings}
+\usepackage{url}
+%%\usepackage[round]{natbib}
+
+\setlength{\unitlength}{1mm}
+\usepackage{pstricks}
+
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%%\usepackage{hyperref}
+
+\begin{document}
+\section{Introduction}
+There are numerous gaze trackers. There are head mounted gaze trackers, infrared camera (Tobii). 
+\newline
+In our study, we will rely on our gaze/head tracker [ref...] using a kinect v2. 
+
+\section{Motivation}
+The present dataset would be used for evaluated our gaze tracker. In particular:
+\begin{itemize}
+\item Evaluate the tracker calibration in a controll setup.
+\item Can we extract gaze behaviors with our tracker?
+\item If yes, which ones? (and usefulness)
+\end{itemize}
+
+\section{Hypothesis}
+The gaze is an important non-verbal communication cue. In particular, it is a good prior for attention modelling (nevertheless our attention may be oriented to a sound source we do not look at). We are interesting in knowing if we can know if someone is looking at an object and a space location. We are also intersting in the timing of the gaze. In particular, reactive and proactive gaze duration.
+
+\section{Materials}
+We want to observe how well we can catch the intention of a teacher (relevant aspect of the task) in various task with various objects. The baseline of the experiment will consist of a table with different object on it and with the robot on one side and the human teacher on the other side. The distance between them will correspond roughly to 1.0-1.5 meter. We list object of interest below. We suppose to have at least two object of each kind (small and big). The different objects that may be relevant to manipulate are
+\begin{itemize}
+\item Cube: The cube is symmetric object, its orientation does not matter. Nevertheless, placing the small cube on the big one is easier that the opposite where we have to care about equilibrium.
+\item Parallelepiped: We could use parallelepiped with a big difference between width and height ($h>>w$). In that case, the orientation of the object is relevant (vertical vs horizontal).
+\item Ball: The ball is symmetric as the cube. Nevertheless, it does not have any orientation (the cube as to be on one of its face, the ball does not have). Moreover, the ball is a more dynamic object, it may move after placing it.
+\item LEGO: Using LEGO may be interesting for the design of a task with many sub-task (construction). Moreover, the experience may be reproduce easier.
+\item Mug and kettle: This is are daily objects. They can both contain a liquid where we expect the robot to act differently.
+\item Any objects of common life: We expect the robot to be able to use daily objects. We will need to test our method on a more realistic case.
+\end{itemize}
+
+\section{Experiments}
+\subsection{Baxter Gaze Calibration}
+Fix end-effector.
+\subsection{Table Points Calibration}
+Fix points on the table.
+\subsection{Table Objects Calibration}
+Baxter says hello with rising the hand (change between left and right). Then he says: please look at the <object>. Now look at me.
+\subsection{Object Moving Calibration}
+Move an object to an other location. Different kind of object. Equilibre, affordance.
+
+\end{document}
