@@ -129,6 +129,20 @@ In present section, we describe different evaluation benchmarks for gaze calibra
 In our experiments, the tasks consist of pick and place actions. We will characterize a pick and place action by: the object ID, the final position (Gaussian) of the object, a boolean that state if the orientation of the object matters when carrying it, and the timestamps of each step.
 \paragraph{Remark} The object position while manipulated is given by the hand position.
 
+\section{Unsupervised gaze calibration}
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.5]{Pictures/GazeObjectBehavior_Land.png}
+\end{center}
+\caption{Results from \cite{Land2009}. (\textbf{A}) The relative timings of body movements, fixations on particular objects, and manipulation of those objects by the hands during the first 70 s of a tea-making session.
+(\textbf{B}) Average relative timings of trunk movements,
+fixations on particular objects (which may involve several individual fixations), and manipulation of those objects. The data represent
+94 object-related actions from three subjects. Typical actions last about 3 s (extended waiting periods, such as watching for the kettle to
+boil, have been excluded). Note that trunk movements (when present) precede fixations, which precede manipulation, by about 0.6 s in
+each case. Similarly, fixation moves on to the next object about 0.6 s before manipulation is complete. There are wide variations in timing
+(histograms), with manipulation sometimes preceding gaze fixation.\label{LandResults}}
+\end{figure}
+
 \clearpage
 \bibliographystyle{ieeetr}
 \bibliography{Notes}
