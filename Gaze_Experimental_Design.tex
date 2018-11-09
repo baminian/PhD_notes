@@ -72,6 +72,47 @@ The recording setup is as shown in figure \ref{Experimental_Setup}. It comprises
 \end{itemize}
 
 \subsection{Recording sessions}
+In this section, the various experiments are described.
+\subsubsection{Static-pose and end-effector target (SP-ET)}
+The end-effector of the robot is used as a target for calibration. More precisely, a gripper of the robot is marked with a white rubber band as shown on figure XXX. The participant is asked to look at the camera on the chest of the robot in order to guarantee, more or less, a frontal image of the face. Once the participant is ready, it will be asked to keep his head pose fixed during the calibration procedure.
+
+\subsubsection{Natural-pose and end-effector target (NP-ET)}
+The end-effector of the robot is used as a target for calibration as described in the precedent (SP-ET) recording session. Nevertheless, in the present recording session, the participant is free to move his head.
+
+\subsubsection{Markers on the table targets (MT)}
+In this recording session, the numbered markers on the table are used as targets for calibration. The participant start by looking at the robot (screen). The robot ask: 
+\begin{center}
+"\textit{Can you see the marker number \texttt{XXX}?}" 
+\end{center}
+And wait for the response. Then it asks: 
+\begin{center}
+\textit{Can you show it to me, please?}"
+\end{center}
+ Repeat 5 times.
+ 
+\subsubsection{Object on the table target (OT)}
+In this recording, the some objects are placed on the marker of the table. The participant is facing the robot, waiting for interaction. The robot asks: 
+\begin{center}
+"\textit{Where is the \texttt{<object>?}}"
+\end{center}
+Repeat 5 times.
+
+\subsection{Put on, then move on (PO-MO)}
+The participant takes a card randomly from the desk. On the card, A tasks is described. The task is given by:
+\begin{center}
+\textit{Put the \texttt{<object1>} on the \texttt{<object2>}. Then, move the \texttt{<object2>} (with \texttt{<object1>} remaining on) on marker number \texttt{XXX}.}
+\end{center}
+
+\subsubsection{Put on, then throw in (PO-TI)}
+The participant takes a card randomly from the desk. On the card, A tasks is described. The task is given by:
+\begin{center}
+\textit{Put the marble on/in \texttt{<object>}. Then, throw the marble (without touching it, that is, using only the \texttt{<object>} in the \texttt{<container>}}
+\end{center}
+
+\subsubsection{Set a table (ST)}
+The participant is asked to set a table (fork, knife, spoon, dish, glass). The objects are randomly placed on the markers of the table.
+
+\subsection{Recording sessions}
 In order to evaluate the gaze estimation algorithm and calibration, we designed a set of three recording sessions using respectively the end-effector of the robot, the markers on the table and the objects on the table as calibration points. In order to evaluate the gaze estimation algorithm with unsupervised calibration, we designed a set of three recording sessions. Moreover, we aim to segment and recognize tasks, in particular, showing and pick-and-place demonstrations. In the present section we describe the six recording session.
 \subsubsection{Gaze calibration}
 In the present section are described the recording session for the supervised gaze calibration method. It involves three different targets type (end-effectors, markers, objects) and two kind of head pose activity (static, natural).
