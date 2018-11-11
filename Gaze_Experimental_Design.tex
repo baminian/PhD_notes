@@ -74,13 +74,17 @@ The recording setup is as shown in figure \ref{Experimental_Setup}. It comprises
 \subsection{Recording sessions}
 In this section, the various experiments are described.
 \subsubsection{Static-pose and end-effector target (SP-ET)}
-The end-effector of the robot is used as a target for calibration. More precisely, a gripper of the robot is marked with a white rubber band as shown on figure XXX. The participant is asked to look at the camera on the chest of the robot in order to guarantee, more or less, a frontal image of the face. Once the participant is ready, it will be asked to keep his head pose fixed during the calibration procedure.
+The end-effector of the robot is used as a target for calibration. More precisely, a gripper of the robot is marked with a white rubber band as shown on figure XXX. The participant is asked to look at the camera (kinect) on the chest of the robot in order to guarantee, more or less, a frontal image of the face. Once the participant is ready, it will be asked to keep his head pose fixed during the calibration procedure. The latter consists in ...
+\paragraph{Motivation}
+The algorithm for gaze estimation is based on the evaluation of the head pose. Indeed, based on the head pose, a frontal image of the face is computed. In order to avoid errors of the gaze estimation due to the frontalization procedure, a static head pose is imposed. We are interested in the evaluation of the gaze estimation algorithm independantly of the frontalization procedure. In particular, how calibration is affected. (not clear)
 
 \subsubsection{Natural-pose and end-effector target (NP-ET)}
-The end-effector of the robot is used as a target for calibration as described in the precedent (SP-ET) recording session. Nevertheless, in the present recording session, the participant is free to move his head.
+The end-effector of the robot is used as a target for calibration as described in the precedent recording session (SP-ET). Nevertheless, in the present recording session, the participant is free to move his head. The calibration procedure consists in ...
+\paragraph{Motivation}
+We are interested of testing our calibration algorithm in a more natural setup. In particular, we want to test how the head pose may affect the calibration. Moreover, the calibration of the gaze tracker using the SP-ET and NP-ET recording sessions will be used to evaluate our unsupervised calibration method based on interactions.
 
 \subsubsection{Markers on the table targets (MT)}
-In this recording session, the numbered markers on the table are used as targets for calibration. The participant start by looking at the robot (screen). The robot ask: 
+In this recording session, the numbered markers on the table are used as targets for calibration (see figure XXX). The participant starts by looking at the robot face (screen). The robot asks: 
 \begin{center}
 "\textit{Can you see the marker number \texttt{XXX}?}" 
 \end{center}
@@ -89,52 +93,38 @@ And wait for the response. Then it asks:
 \textit{Can you show it to me, please?}"
 \end{center}
  Repeat 5 times.
+\paragraph{Motivation.}
+The MT recording session provides additionnal points for calibration with natural head pose. In particular, the calibration points are contains in the working region for the future recording sessions. Beside, the supervised calibration of our gaze tracker, we are interested in the gaze behavior during interaction. The MT recording provides to type of interaction cues. The first question may produce a gaze at the marker. The interaction can be split in 4 steps: listen, search, find, answer. That will be intersting to recognize for our future research. The second question produce another type of interaction involving pointing gesture. We believe that gaze and pointing  are strongly correlated and may give a strong prior for an unsupervised calibration of the gaze tracker.
  
 \subsubsection{Object on the table target (OT)}
-In this recording, the some objects are placed on the marker of the table. The participant is facing the robot, waiting for interaction. The robot asks: 
+In this recording, some objects are placed on the marker of the table. The participant is facing the robot, waiting for interaction. The robot asks: 
 \begin{center}
-"\textit{Where is the \texttt{<object>?}}"
+"\textit{Where is the \texttt{<object>}?}"
 \end{center}
-Repeat 5 times.
+And wait for an answer. Repeat 5 times.
+\paragraph{Motivation.} The present recording session is quiet similar to the MT recoding. Nevertheless, it differs with respect to two aspects. First, the points of fixation are not as trivial as in the case of markers on the table. In particular, we are intersting in the estimation of calibration algorithm for different size and shape of objects. Moreover, the OT recording provides a slighty different interaction. The participant is more free to choose his way of explaining "\textit{where is the \texttt{<object>}}". Some participants may prefer to point to the object or only look at the object. While some others will refer to the position of the object with respect to the table or the other objects on the table. This aspect of interaction will be interested for our future research. 
 
-\subsection{Put on, then move on (PO-MO)}
+
+\subsubsection{Put on, then move on (Pon-Mon)}
 The participant takes a card randomly from the desk. On the card, A tasks is described. The task is given by:
 \begin{center}
 \textit{Put the \texttt{<object1>} on the \texttt{<object2>}. Then, move the \texttt{<object2>} (with \texttt{<object1>} remaining on) on marker number \texttt{XXX}.}
 \end{center}
+\paragraph{Motiviation.} Through this recording session, we aim to use interaction cues for an unsupervised calibratio procedure. The demonstration consists in two pick an place. Using gaze prior as given in \cite{Land2009}, we aim to test our calibration procedure. Moreover, we are intersting in task segmentation and recognition. In particular, we want to know if the gaze estimation algorithm can capture a difference in the gaze behavior between the two pick-and-place demonstrations. Moreover, we will experiment different size and shape of objects and initial position (distance between the objects may influence the calibration procedue).
 
-\subsubsection{Put on, then throw in (PO-TI)}
-The participant takes a card randomly from the desk. On the card, A tasks is described. The task is given by:
+\subsubsection{Put on, then throw in (Pon-Ton)}
+The participant takes a card randomly from the dek. On the card, a tasks is described. The task is given by:
 \begin{center}
-\textit{Put the marble on/in \texttt{<object>}. Then, throw the marble (without touching it, that is, using only the \texttt{<object>} in the \texttt{<container>}}
+\textit{Put the marble on/in \texttt{<object>}. Then, throw the marble (without touching it, that is, using only the \texttt{<object>}) in the \texttt{<container>}}
 \end{center}
+\paragraph{Motivation.} The present recording session is slightly similar to the Pon-Mon recording. In the Pon-Ton recording session the first object is always the marble. The latter is clear point and the region of attention can be defined accuretely. The second step of the recording session involves a different dynamic than the Pon-Mon recording. In particular, we want to know if the gaze estimation algorithm can capture any difference in gaze behavior between the different object involved, as well as, between the Pon-Mon recording.
 
 \subsubsection{Set a table (ST)}
 The participant is asked to set a table (fork, knife, spoon, dish, glass). The objects are randomly placed on the markers of the table.
+\paragraph{Motivation.}
+The present recording session involves a more natural demonstration of a task. The number of object involved in the interaction are higher than the previous recording sessions. Moreover, the task is segmented in more subtask. We are interested to know if we can calibrate our gaze estimation algorithm through this interaction, as well as, segmented and recognition of the task presented.
 
-\subsection{Recording sessions}
-In order to evaluate the gaze estimation algorithm and calibration, we designed a set of three recording sessions using respectively the end-effector of the robot, the markers on the table and the objects on the table as calibration points. In order to evaluate the gaze estimation algorithm with unsupervised calibration, we designed a set of three recording sessions. Moreover, we aim to segment and recognize tasks, in particular, showing and pick-and-place demonstrations. In the present section we describe the six recording session.
-\subsubsection{Gaze calibration}
-In the present section are described the recording session for the supervised gaze calibration method. It involves three different targets type (end-effectors, markers, objects) and two kind of head pose activity (static, natural).
-\paragraph{Targets}
-\begin{itemize}
-\item \textit{End-Effector Target (ET)}: the end-effector of the robot is used as a target for calibration. The exact point at which the participants have to look is marked by a white rubber band on the gripper. For each robot's arms, the calibration points are contains in a parallelepiped of width and height of 1 meter and depth of 30 centimeters at the left and right of the robot. There are 12 points for both sides of the robot distributed as a grid ($2 \times 3 \times 3$).
-\item \textit{Markers Target (MT)}: (need some measurement and camera orientation.) the table is marked with 15 markers distributed as a grid ($3 \times 5$). Each markers is numbered. The experimental supervisor will ask to the participant to look at a marker number until s/he ask her/him to look at the next target.
-\item \textit{Object Target (OT)}: the objects are placed on the table (on the markers). The participant start by looking at the robot who asks to the participant to show him one of the objects on the table by naming it. After 3-4 seconds (need to test), the robot asks to show him an other object and so on. For this experiment, we consider only the natural head pose activity framework.
-\end{itemize}
-\paragraph{Head pose activity}
-\begin{itemize}
-\item \textit{Static Pose (SP)}: In the case of the End-Effector target (ET), the participant start by looking at the middle of the robot's screen in order to guarantee frontal view of the face. Then, the participant is asked to keep his head pose fixed. For the Markers Target, the participant start pas looking at the marker in the middle of the table.
-\item \textit{Natural Pose (NP)}: The participant can freely move its head toward the target.
-\end{itemize}
-\subsubsection{Gaze behavior}
-\begin{itemize}
-\item \textit{Cup and saucer Interaction (CI)}: the cup and the saucer are placed on two table markers. The participant has to take the cup and place it on the saucer. Then, s/he takes the saucer (with the cup on) and place on a the defined marker. Each participants proceed to 3 different setup.
-\item \textit{Table Interaction (TI)}: At first the dish, fork, knife at glass are placed randomly on the table (on the markers). The glass is poured (no water) in order to give the impression that is full of a liquid. Then the participant is told to arrange the objects as if s/he sets a table.
-\end{itemize}
 
-\subsubsection{Remarks}
-In order to not bias the natural gaze behavior of the participants, we proceed first with the gaze behavior experiment and, then, with the gaze calibration.
 
 \section{Data processing}
 Besides the raw data describe in section \ref{Overview}, we also provide additional information that is essential for deriving ground truth measures for evaluation or simply useful to exploit the dataset and run the experiments. It compromises the camera calibration, the synchronization, the head pose, the manual annotations, the target position, and 3D object meshes. Below, we present the procedure to estimate those parameters
@@ -183,6 +173,10 @@ fixations on particular objects (which may involve several individual fixations)
 boil, have been excluded). Note that trunk movements (when present) precede fixations, which precede manipulation, by about 0.6 s in
 each case. Similarly, fixation moves on to the next object about 0.6 s before manipulation is complete. There are wide variations in timing
 (histograms), with manipulation sometimes preceding gaze fixation.\label{LandResults}}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{Pictures/MHRI_Point.png}
 \end{figure}
 
 \clearpage
